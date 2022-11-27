@@ -15,4 +15,3 @@ const axios = require('axios');
 
 const formRef = document.querySelector('.search-form');
 const loadBtnRef = document.querySelector('.load-more');
-console.log(loadBtnRef);

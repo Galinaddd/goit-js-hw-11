@@ -1,0 +1,12 @@
+body { text-align: center;}
+
+.search-form{
+    margin-top: 30px;
+}
+.load-more{
+
+margin-top: 10px;
+}
+
+button { color: #ffffff;
+background-color: blue;}
