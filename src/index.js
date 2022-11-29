@@ -48,11 +48,11 @@ async function searchByKeyword(keyword) {
   const searchQuery = `${BASE_URL}?${KEY}&${params}&per_page=${PER_PAGE}&page=${page}&q=${keyword}`;
   // console.log(searchQuery);
   try {
-    response = await axios.get(searchQuery);
+    const response = await axios.get(searchQuery);
+    return response;
   } catch (error) {
     console.log(error);
   }
-  return response;
 }
 
 function createMarkup(arr) {

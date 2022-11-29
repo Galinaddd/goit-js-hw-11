@@ -16,28 +16,34 @@ background-color: blue;}
 
 .gallery{
     display: flex;
-   
+   gap: 20px;
         flex-wrap: wrap;
         align-items: center;
-        gap:20px;
+       
         /* justify-content: center; */
   
 }
 .photo-card
 {
     object-fit: cover;
-    /* flex-basis: calc((100%-60px)/4); */
-    width: calc((100%-60px)/4);
+    flex-basis: calc((100%-60)/4);
+  
+    
   
 }
 
-a {text-decoration: none;}
+a {display: inline-block;
+    text-decoration: none;
+}
+p{margin: 0;}
 
 
 .info{ color: #2f2f2f;
     font-size: 16px;
     display: flex;
     justify-content: space-around;
+    padding: 5px;
 }
 img {display: block;
-width: 100%;}
+width: 100%;
+}
