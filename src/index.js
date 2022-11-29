@@ -24,20 +24,20 @@ async function onSearch(evt) {
   console.log('its a search', page);
 
   keyword = evt.currentTarget.elements.searchQuery.value.trim();
+  try {
+    const resault = await searchByKeyword(keyword);
 
-  const resault = await searchByKeyword(keyword);
-  console.log('resault', resault);
-
-  if (resault.data.hits.length) {
-    galleryRef.innerHTML = createMarkup(resault.data.hits);
-    lightbox.refresh();
-    loadBtnRef.removeAttribute('hidden');
-
-    console.log(loadBtnRef);
-  } else
-    Notiflix.Notify.failure(
-      'Sorry, there are no images matching your search query. Please try again.'
-    );
+    if (resault.data.hits.length) {
+      galleryRef.innerHTML = createMarkup(resault.data.hits);
+      lightbox.refresh();
+      loadBtnRef.removeAttribute('hidden');
+    } else
+      Notiflix.Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function searchByKeyword(keyword) {
@@ -46,7 +46,7 @@ async function searchByKeyword(keyword) {
   const PER_PAGE = 40;
   const params = `image_type=photo&orientation=horizontal&safesearch=true`;
   const searchQuery = `${BASE_URL}?${KEY}&${params}&per_page=${PER_PAGE}&page=${page}&q=${keyword}`;
-  // console.log(searchQuery);
+
   try {
     const response = await axios.get(searchQuery);
     return response;
@@ -56,7 +56,7 @@ async function searchByKeyword(keyword) {
 }
 
 function createMarkup(arr) {
-  console.log('arr in createmarkup', arr);
+  // console.log('arr in createmarkup', arr);
   return arr
     .map(
       el => `
@@ -90,8 +90,6 @@ async function onLoadMore() {
   } catch (error) {
     console.log(error);
   }
-
-  console.log(resault);
   galleryRef.insertAdjacentHTML('beforeend', createMarkup(resault.data.hits));
   lightbox.refresh();
   const { height: cardHeight } = document
