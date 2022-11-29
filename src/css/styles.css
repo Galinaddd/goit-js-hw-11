@@ -16,7 +16,7 @@ background-color: rgb(45, 104, 212);}
 
 .gallery{
     display: flex;
-   gap: 30px;
+   gap: 20px;
         flex-wrap: wrap;
         align-items: center;
        
@@ -26,7 +26,7 @@ background-color: rgb(45, 104, 212);}
 .photo-card
 {
     object-fit: cover;
-    flex-basis: calc((100%-90)/4);
+    flex-basis: calc((100%-60)/4);
     }
 
 a {display: inline-block;
@@ -41,6 +41,8 @@ p{margin: 0;}
     justify-content: space-around;
     padding: 5px;
 }
+
+
 img {display: block;
 width: 100%;
 }

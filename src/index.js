@@ -21,8 +21,6 @@ let keyword = '';
 async function onSearch(evt) {
   page = 1;
   evt.preventDefault();
-  console.log('its a search', page);
-
   keyword = evt.currentTarget.elements.searchQuery.value.trim();
   try {
     const resault = await searchByKeyword(keyword);
@@ -85,11 +83,9 @@ function createMarkup(arr) {
 async function onLoadMore() {
   page += 1;
   console.log('load more click');
-  try {
-    const resault = await searchByKeyword(keyword);
-  } catch (error) {
-    console.log(error);
-  }
+
+  const resault = await searchByKeyword(keyword);
+
   galleryRef.insertAdjacentHTML('beforeend', createMarkup(resault.data.hits));
   lightbox.refresh();
   const { height: cardHeight } = document
