@@ -96,6 +96,7 @@ async function onLoadMore() {
     top: cardHeight * 2,
     behavior: 'smooth',
   });
+
   if (page * 40 >= resault.data.totalHits) {
     loadBtnRef.setAttribute('hidden', true);
     Notiflix.Notify.failure(
