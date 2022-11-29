@@ -47,16 +47,21 @@ async function searchByKeyword(keyword) {
   const params = `image_type=photo&orientation=horizontal&safesearch=true`;
   const searchQuery = `${BASE_URL}?${KEY}&${params}&per_page=${PER_PAGE}&page=${page}&q=${keyword}`;
   // console.log(searchQuery);
-  return (response = await axios.get(searchQuery));
+  try {
+    response = await axios.get(searchQuery);
+  } catch (error) {
+    console.log(error);
+  }
+  return response;
 }
 
 function createMarkup(arr) {
   console.log('arr in createmarkup', arr);
   return arr
     .map(
-      el => `<a  href="${el.largeImageURL}">
-     <div class="photo-card">
-  <img src="${el.webformatURL}" alt="${el.tags}" loading="lazy" />
+      el => `
+     <div class="photo-card"><a  href="${el.largeImageURL}">
+  <img src="${el.webformatURL}" alt="${el.tags}" loading="lazy" /></a>
   <div class="info">
     <p class="info-item">
       <b>Likes ${el.likes}</b>
@@ -72,7 +77,7 @@ function createMarkup(arr) {
     </p>
   </div>
 </div>
-</a>`
+`
     )
     .join(' ');
 }
@@ -80,9 +85,23 @@ function createMarkup(arr) {
 async function onLoadMore() {
   page += 1;
   console.log('load more click');
-  const resault = await searchByKeyword(keyword);
+  try {
+    const resault = await searchByKeyword(keyword);
+  } catch (error) {
+    console.log(error);
+  }
+
   console.log(resault);
   galleryRef.insertAdjacentHTML('beforeend', createMarkup(resault.data.hits));
+  lightbox.refresh();
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
   if (page * 40 >= resault.data.totalHits) {
     loadBtnRef.setAttribute('hidden', true);
     Notiflix.Notify.failure(
